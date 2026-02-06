@@ -1,4 +1,14 @@
-treninky.db
-treninky.db-shm
-treninky.db-wal
+bin/
+obj/
+**/bin/
+**/obj/
+*.user
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.log
+.vs/
+appsettings.Development.json
 uploads/

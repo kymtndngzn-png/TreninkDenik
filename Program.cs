@@ -4294,6 +4294,15 @@ nav a:hover { background: rgba(255,255,255,0.08); opacity: 1; text-decoration: n
 nav { flex-direction: row; flex-wrap: wrap; min-width: auto; padding: 0.6rem 0.75rem; }
 .nav-user { margin-top: 0; margin-left: auto; }
 }
+@media (max-width: 720px) {
+header h1 { font-size: 1.1rem; }
+.container { margin: 0.75rem; padding: 0; }
+nav { padding: 0.5rem 0.6rem; gap: 0.4rem; }
+nav a { font-size: 0.95rem; }
+.nav-user { flex-basis: 100%; margin-left: 0; }
+.card { overflow-x: auto; }
+table { min-width: 520px; }
+}
 .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 2px 10px rgba(15,23,42,0.06); padding: 1rem; }
 .grid { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1rem; align-items: start; }
 @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
