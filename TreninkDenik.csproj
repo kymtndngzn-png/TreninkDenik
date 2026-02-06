@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.4" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="MobileApp\**" />
+    <EmbeddedResource Remove="MobileApp\**" />
+    <None Remove="MobileApp\**" />
+  </ItemGroup>
+
+</Project>
