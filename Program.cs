@@ -3397,7 +3397,7 @@ sb.Append($"<p style=\"color:#64748b; margin:-0.35rem 0 0.75rem\">Vlastní typy:
 
 // Filtry
 sb.Append("<div style=\"margin:0.75rem 0 1rem\">\n");
-sb.Append("<form method=\"get\" action=\"/zaznamy\" style=\"display:flex; gap:0.75rem; flex-wrap:wrap; align-items:end\">\n");
+sb.Append("<form method=\"get\" action=\"/zaznamy\" class=\"filters-form\" style=\"display:flex; gap:0.75rem; flex-wrap:wrap; align-items:flex-end\">\n");
 
 sb.Append("<div class=\"field\" style=\"min-width:160px\">\n<label for=\"from\">Od</label>\n");
 sb.Append($"<input id=\"from\" name=\"from\" type=\"date\" value=\"{H(from is null ? "" : DateToIso(from.Value))}\" />\n</div>");
@@ -4309,6 +4309,8 @@ table { min-width: 520px; }
 .range-form button, .range-form .btn-secondary { flex: 1 1 120px; justify-content: center; }
 .tabs { flex-wrap: wrap; }
 .tab-btn { flex: 1 1 120px; justify-content: center; }
+.filters-form { gap: 0.5rem; }
+.filters-form .field { min-width: 0; flex: 1 1 100%; }
 }
 .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 2px 10px rgba(15,23,42,0.06); padding: 1rem; }
 .grid { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1rem; align-items: start; }
@@ -4316,7 +4318,10 @@ table { min-width: 520px; }
 .field { min-width: 0; }
 .field label { display:block; font-size: 0.9rem; color: var(--muted); margin-bottom: 0.25rem; }
 .field input, .field select { width: 100%; padding: 0.55rem 0.65rem; border: 1px solid var(--border); border-radius: 10px; font-size: 1rem; background: white; }
-.field input[type="date"] { min-width: 0; width: 100%; max-width: 100%; display: block; }
+.field input[type="date"] { min-width: 0; width: 100%; max-width: 100%; display: block; height: 40px; line-height: 1.2; -webkit-appearance: none; appearance: none; }
+.field input[type="date"]::-webkit-inner-spin-button,
+.field input[type="date"]::-webkit-clear-button { display: none; }
+.field input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.35; }
 .actions { margin-top: 1rem; }
 .tag-list { display:flex; gap:0.75rem; flex-wrap:wrap; }
 .tag-list label { display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.95rem; color: var(--text); white-space: nowrap; }
@@ -4353,6 +4358,7 @@ th { background: #f1f5f9; font-size: 0.9rem; color: #0f172a; }
 .range-form { display:flex; gap: 0.75rem; flex-wrap:wrap; align-items:flex-end; margin: 0 0 1rem; }
 .range-form .field { min-width: 160px; }
 .range-form .btn-secondary { display:flex; justify-content:center; }
+.filters-form .field { min-width: 160px; }
 .range-tabs a { display:inline-flex; align-items:center; gap:0.35rem; padding: 0.45rem 0.75rem; border-radius: 999px; background: #e2e8f0; color: #0f172a; text-decoration:none; font-weight: 700; border: 1px solid #cbd5e1; }
 .range-tabs a.active { background: var(--primary); color: white; border-color: var(--primary); }
 
