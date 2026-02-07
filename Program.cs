@@ -2796,11 +2796,11 @@ body.Append("""
 <div class="field" style="margin-top:1rem">
 <label for="poznamka">Poznámka</label>
 <textarea id="poznamka" name="poznamka" rows="3" style="width:100%; padding:0.55rem 0.65rem; border: 1px solid var(--border); border-radius: 10px; font-size: 1rem; background: white; resize: vertical"></textarea>
-<div style="margin-top:0.6rem; display:flex; gap:0.75rem; flex-wrap:wrap">
-<label style="display:flex; gap:0.4rem; align-items:center"><input type="checkbox" name="tag" value="intervaly" /> intervaly</label>
-<label style="display:flex; gap:0.4rem; align-items:center"><input type="checkbox" name="tag" value="závod" /> závod</label>
-<label style="display:flex; gap:0.4rem; align-items:center"><input type="checkbox" name="tag" value="easy" /> easy</label>
-<label style="display:flex; gap:0.4rem; align-items:center"><input type="checkbox" name="tag" value="bolest" /> bolest</label>
+<div class="tag-list" style="margin-top:0.6rem">
+<label><input type="checkbox" name="tag" value="intervaly" /> intervaly</label>
+<label><input type="checkbox" name="tag" value="závod" /> závod</label>
+<label><input type="checkbox" name="tag" value="easy" /> easy</label>
+<label><input type="checkbox" name="tag" value="bolest" /> bolest</label>
 </div>
 </div>
 <div class="field" style="margin-top:0.75rem">
@@ -4302,6 +4302,8 @@ nav a { font-size: 0.95rem; }
 .nav-user { flex-basis: 100%; margin-left: 0; }
 .card { overflow-x: auto; }
 table { min-width: 520px; }
+.tag-list { gap: 0.5rem; }
+.tag-list label { font-size: 0.9rem; }
 }
 .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 2px 10px rgba(15,23,42,0.06); padding: 1rem; }
 .grid { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1rem; align-items: start; }
@@ -4310,6 +4312,9 @@ table { min-width: 520px; }
 .field label { display:block; font-size: 0.9rem; color: var(--muted); margin-bottom: 0.25rem; }
 .field input, .field select { width: 100%; padding: 0.55rem 0.65rem; border: 1px solid var(--border); border-radius: 10px; font-size: 1rem; background: white; }
 .actions { margin-top: 1rem; }
+.tag-list { display:flex; gap:0.75rem; flex-wrap:wrap; }
+.tag-list label { display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.95rem; color: var(--text); white-space: nowrap; }
+.tag-list input { width: auto; margin: 0; }
 button, .btn-secondary, .tab-btn, .range-btn, .metric-btn, .file-label { display: inline-flex; align-items: center; gap: 0.45rem; border-radius: var(--btn-radius); padding: 0 var(--btn-pad-x); height: var(--btn-height); font-weight: 700; font-size: var(--btn-font); line-height: 1; cursor: pointer; text-decoration: none; border: 1px solid #cbd5e1; background: #e2e8f0; color: #0f172a; }
 button:hover, .btn-secondary:hover, .tab-btn:hover, .range-btn:hover, .metric-btn:hover, .file-label:hover { filter: brightness(0.95); }
 .icon-inline { width: 18px; height: 18px; display:inline-flex; align-items:center; justify-content:center; }
