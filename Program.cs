@@ -2649,19 +2649,114 @@ body.Append("""
 <div class="grid">
 <div class="field">
 <label for="beh-vzdalenost">Vzdálenost (km)</label>
-<input id="beh-vzdalenost" type="number" step="0.01" min="0" name="beh_vzdalenost" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="beh-vzdalenost" name="beh_vzd_int">
+""");
+for (var i = 0; i <= 500; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+</div>
+<span class="inline-sep">.</span>
+<div class="inline-part">
+<select name="beh_vzd_dec">
+""");
+for (var i = 0; i <= 9; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+</div>
+<span class="inline-suffix">km</span>
+</div>
 </div>
 <div class="field">
-<label for="beh-tempo">Tempo (min/km) – např. 5:10</label>
-<input id="beh-tempo" type="text" name="beh_tempo" placeholder="5:10" />
+<label for="beh-tempo">Tempo (HH:MM:SS)</label>
+<div class="inline-selects">
+<div class="inline-part">
+<select id="beh-tempo" name="beh_tempo_h">
+""");
+for (var i = 0; i <= 60; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">h</span>
+</div>
+<div class="inline-part">
+<select name="beh_tempo_m">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == 6 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+<div class="inline-part">
+<select name="beh_tempo_s">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">s</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="beh-prevyseni">Převýšení (m)</label>
-<input id="beh-prevyseni" type="number" min="0" name="beh_prevyseni" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="beh-prevyseni" name="beh_prev_k">
+""");
+for (var i = 0; i <= 100; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">tis.</span>
+</div>
+<div class="inline-part">
+<select name="beh_prev_r">
+""");
+for (var i = 0; i <= 999; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:000}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="beh-tep">Tep (průměr)</label>
-<input id="beh-tep" type="number" min="0" name="beh_tep" />
+<select id="beh-tep" name="beh_tep">
+""");
+for (var i = 0; i <= 210; i++)
+{
+var sel = i == 130 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
 </div>
 </div>
 </div>
@@ -2912,10 +3007,10 @@ if (!string.IsNullOrWhiteSpace(raw)) customValues[f.Id] = raw.Trim();
 }
 else if (zaznam.Typ == "beh")
 {
-zaznam.VzdalenostKm = ParseDouble(form["beh_vzdalenost"].ToString());
-zaznam.Tempo = form["beh_tempo"].ToString();
-zaznam.PrevyseniM = ParseInt(form["beh_prevyseni"].ToString());
-zaznam.Tep = ParseInt(form["beh_tep"].ToString());
+zaznam.VzdalenostKm = BuildDistanceFromForm(form, "beh");
+zaznam.Tempo = BuildTempoFromForm(form, "beh");
+zaznam.PrevyseniM = BuildPrevyseniFromForm(form, "beh");
+zaznam.Tep = ClampInt(ParseInt(form["beh_tep"].ToString()), 0, 210);
 }
 else if (zaznam.Typ == "kolo")
 {
@@ -2982,6 +3077,12 @@ var customTypes = DbGetCustomTypes(ownerUserId);
 var customFields = DbGetCustomFieldsForTypes(customTypes.Select(t => t.Id).ToList());
 var customFieldsByType = customFields.GroupBy(f => f.TypeId).ToDictionary(g => g.Key, g => g.ToList());
 var customValues = DbGetCustomValuesByRecord(z.Id);
+SplitDistance(z.VzdalenostKm, out var behVzdInt, out var behVzdDec);
+var (behTempoH, behTempoM, behTempoS) = ParseTempoParts(z.Tempo);
+var behPrevVal = ClampInt(z.PrevyseniM, 0, 100000);
+var behPrevK = behPrevVal / 1000;
+var behPrevR = behPrevVal % 1000;
+var behTep = ClampInt(z.Tep, 0, 210);
 
 var body = new StringBuilder();
 body.Append($"<h2>Editace záznamu</h2><p style=\"color:#64748b;margin-top:-0.25rem\">ID: {z.Id}</p>");
@@ -3015,22 +3116,119 @@ body.Append($"""
 <div class="grid">
 <div class="field">
 <label for="beh-vzdalenost">Vzdálenost (km)</label>
-<input id="beh-vzdalenost" type="number" step="0.01" min="0" name="beh_vzdalenost" value="{H(ValD(z.VzdalenostKm))}" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="beh-vzdalenost" name="beh_vzd_int">
+""");
+for (var i = 0; i <= 500; i++)
+{
+var sel = i == behVzdInt ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+</div>
+<span class="inline-sep">.</span>
+<div class="inline-part">
+<select name="beh_vzd_dec">
+""");
+for (var i = 0; i <= 9; i++)
+{
+var sel = i == behVzdDec ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+</div>
+<span class="inline-suffix">km</span>
+</div>
 </div>
 <div class="field">
-<label for="beh-tempo">Tempo (min/km) – např. 5:10</label>
-<input id="beh-tempo" type="text" name="beh_tempo" value="{H(z.Tempo)}" />
+<label for="beh-tempo">Tempo (HH:MM:SS)</label>
+<div class="inline-selects">
+<div class="inline-part">
+<select id="beh-tempo" name="beh_tempo_h">
+""");
+for (var i = 0; i <= 60; i++)
+{
+var sel = i == behTempoH ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">h</span>
+</div>
+<div class="inline-part">
+<select name="beh_tempo_m">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == behTempoM ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+<div class="inline-part">
+<select name="beh_tempo_s">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == behTempoS ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">s</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="beh-prevyseni">Převýšení (m)</label>
-<input id="beh-prevyseni" type="number" min="0" name="beh_prevyseni" value="{H(ValI(z.PrevyseniM))}" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="beh-prevyseni" name="beh_prev_k">
+""");
+for (var i = 0; i <= 100; i++)
+{
+var sel = i == behPrevK ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">tis.</span>
+</div>
+<div class="inline-part">
+<select name="beh_prev_r">
+""");
+for (var i = 0; i <= 999; i++)
+{
+var sel = i == behPrevR ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:000}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="beh-tep">Tep (průměr)</label>
-<input id="beh-tep" type="number" min="0" name="beh_tep" value="{H(ValI(z.Tep))}" />
+<select id="beh-tep" name="beh_tep">
+""");
+for (var i = 0; i <= 210; i++)
+{
+var sel = i == behTep ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
 </div>
 </div>
 </div>
+""");
+body.Append($"""
 <div id="sekce-cviceni" class="typ-section" data-typ="cviceni" style="display:none">
 <h3>Cvičení</h3>
 <div class="grid">
@@ -3263,10 +3461,10 @@ if (!string.IsNullOrWhiteSpace(raw)) customValues[f.Id] = raw.Trim();
 }
 else if (zaznam.Typ == "beh")
 {
-zaznam.VzdalenostKm = ParseDouble(form["beh_vzdalenost"].ToString());
-zaznam.Tempo = form["beh_tempo"].ToString();
-zaznam.PrevyseniM = ParseInt(form["beh_prevyseni"].ToString());
-zaznam.Tep = ParseInt(form["beh_tep"].ToString());
+zaznam.VzdalenostKm = BuildDistanceFromForm(form, "beh");
+zaznam.Tempo = BuildTempoFromForm(form, "beh");
+zaznam.PrevyseniM = BuildPrevyseniFromForm(form, "beh");
+zaznam.Tep = ClampInt(ParseInt(form["beh_tep"].ToString()), 0, 210);
 }
 else if (zaznam.Typ == "kolo")
 {
@@ -4326,6 +4524,11 @@ table { min-width: 520px; }
 .tag-list { display:flex; gap:0.75rem; flex-wrap:wrap; }
 .tag-list label { display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.95rem; color: var(--text); white-space: nowrap; }
 .tag-list input { width: auto; margin: 0; }
+.inline-selects { display:flex; gap:0.45rem; flex-wrap:wrap; align-items:center; }
+.inline-selects select { flex: 1 1 120px; min-width: 0; }
+.inline-part { display:inline-flex; align-items:center; gap:0.35rem; }
+.inline-sep { font-weight: 700; color: var(--muted); }
+.inline-suffix { font-size: 0.85rem; color: var(--muted); }
 button, .btn-secondary, .tab-btn, .range-btn, .metric-btn, .file-label { display: inline-flex; align-items: center; gap: 0.45rem; border-radius: var(--btn-radius); padding: 0 var(--btn-pad-x); height: var(--btn-height); font-weight: 700; font-size: var(--btn-font); line-height: 1; cursor: pointer; text-decoration: none; border: 1px solid #cbd5e1; background: #e2e8f0; color: #0f172a; }
 button:hover, .btn-secondary:hover, .tab-btn:hover, .range-btn:hover, .metric-btn:hover, .file-label:hover { filter: brightness(0.95); }
 .icon-inline { width: 18px; height: 18px; display:inline-flex; align-items:center; justify-content:center; }
@@ -4825,21 +5028,122 @@ if (double.TryParse((s ?? "").Trim(), NumberStyles.Any, CultureInfo.GetCultureIn
 return 0;
 }
 
+static int ClampInt(int value, int min, int max)
+{
+if (value < min) return min;
+if (value > max) return max;
+return value;
+}
+
+static void SplitDistance(double value, out int km, out int dec)
+{
+if (value <= 0)
+{
+km = 0;
+dec = 0;
+return;
+}
+km = (int)Math.Floor(value);
+var frac = value - km;
+dec = (int)Math.Round(frac * 10, MidpointRounding.AwayFromZero);
+if (dec == 10)
+{
+km += 1;
+dec = 0;
+}
+km = ClampInt(km, 0, 500);
+dec = ClampInt(dec, 0, 9);
+}
+
+static (int h, int m, int s) ParseTempoParts(string? tempoText)
+{
+var t = (tempoText ?? "").Trim();
+if (string.IsNullOrWhiteSpace(t)) return (0, 0, 0);
+var parts = t.Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+if (parts.Length == 2)
+{
+if (!int.TryParse(parts[0], out var mm)) return (0, 0, 0);
+if (!int.TryParse(parts[1], out var ss)) return (0, 0, 0);
+return (0, ClampInt(mm, 0, 59), ClampInt(ss, 0, 59));
+}
+if (parts.Length == 3)
+{
+if (!int.TryParse(parts[0], out var hh)) return (0, 0, 0);
+if (!int.TryParse(parts[1], out var mm)) return (0, 0, 0);
+if (!int.TryParse(parts[2], out var ss)) return (0, 0, 0);
+return (ClampInt(hh, 0, 60), ClampInt(mm, 0, 59), ClampInt(ss, 0, 59));
+}
+return (0, 0, 0);
+}
+
+static string BuildTempoFromForm(IFormCollection form, string prefix)
+{
+var hKey = $"{prefix}_tempo_h";
+var mKey = $"{prefix}_tempo_m";
+var sKey = $"{prefix}_tempo_s";
+if (form.ContainsKey(hKey) || form.ContainsKey(mKey) || form.ContainsKey(sKey))
+{
+var h = ClampInt(ParseInt(form[hKey].ToString()), 0, 60);
+var m = ClampInt(ParseInt(form[mKey].ToString()), 0, 59);
+var s = ClampInt(ParseInt(form[sKey].ToString()), 0, 59);
+return $"{h}:{m:00}:{s:00}";
+}
+return form[$"{prefix}_tempo"].ToString();
+}
+
+static double BuildDistanceFromForm(IFormCollection form, string prefix)
+{
+var intKey = $"{prefix}_vzd_int";
+var decKey = $"{prefix}_vzd_dec";
+if (form.ContainsKey(intKey) || form.ContainsKey(decKey))
+{
+var km = ClampInt(ParseInt(form[intKey].ToString()), 0, 500);
+var dec = ClampInt(ParseInt(form[decKey].ToString()), 0, 9);
+return km + (dec / 10.0);
+}
+return ParseDouble(form[$"{prefix}_vzdalenost"].ToString());
+}
+
+static int BuildPrevyseniFromForm(IFormCollection form, string prefix)
+{
+var kKey = $"{prefix}_prev_k";
+var rKey = $"{prefix}_prev_r";
+if (form.ContainsKey(kKey) || form.ContainsKey(rKey))
+{
+var k = ClampInt(ParseInt(form[kKey].ToString()), 0, 100);
+var r = ClampInt(ParseInt(form[rKey].ToString()), 0, 999);
+var val = (k * 1000) + r;
+return ClampInt(val, 0, 100000);
+}
+return ParseInt(form[$"{prefix}_prevyseni"].ToString());
+}
+
 static bool TryParsePaceMinPerKm(string? tempoText, out double paceMinPerKm)
 {
 paceMinPerKm = 0;
 var t = (tempoText ?? "").Trim();
 if (string.IsNullOrWhiteSpace(t)) return false;
 
-// povolíme: "5:10" nebo "5.5" (min)
+// povolíme: "5:10", "1:05:30" nebo "5.5" (min)
 if (t.Contains(':'))
 {
 var parts = t.Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-if (parts.Length != 2) return false;
+if (parts.Length == 2)
+{
 if (!int.TryParse(parts[0], out var mm)) return false;
 if (!int.TryParse(parts[1], out var ss)) return false;
 paceMinPerKm = mm + (ss / 60.0);
 return paceMinPerKm > 0;
+}
+if (parts.Length == 3)
+{
+if (!int.TryParse(parts[0], out var hh)) return false;
+if (!int.TryParse(parts[1], out var mm)) return false;
+if (!int.TryParse(parts[2], out var ss)) return false;
+paceMinPerKm = (hh * 60) + mm + (ss / 60.0);
+return paceMinPerKm > 0;
+}
+return false;
 }
 
 var d = ParseDouble(t);
@@ -4857,13 +5161,11 @@ return v.ToString("0.##", CultureInfo.InvariantCulture);
 static string FormatPace(double minPerKm)
 {
 if (minPerKm <= 0) return "-";
-var mins = (int)Math.Floor(minPerKm);
-var secs = (int)Math.Round((minPerKm - mins) * 60);
-if (secs == 60)
-{
-mins += 1;
-secs = 0;
-}
+var totalSeconds = (int)Math.Round(minPerKm * 60);
+var hours = totalSeconds / 3600;
+var mins = (totalSeconds / 60) % 60;
+var secs = totalSeconds % 60;
+if (hours > 0) return $"{hours}:{mins:00}:{secs:00}";
 return $"{mins}:{secs:00}";
 }
 
