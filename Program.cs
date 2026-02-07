@@ -2677,24 +2677,12 @@ body.Append("""
 </div>
 </div>
 <div class="field">
-<label for="beh-tempo">Tempo (HH:MM:SS)</label>
+<label for="beh-tempo">Tempo (MM:SS)</label>
 <div class="inline-selects">
 <div class="inline-part">
-<select id="beh-tempo" name="beh_tempo_h">
+<select id="beh-tempo" name="beh_tempo_m">
 """);
 for (var i = 0; i <= 60; i++)
-{
-var sel = i == 0 ? " selected" : "";
-body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
-}
-body.Append("""
-</select>
-<span class="inline-suffix">h</span>
-</div>
-<div class="inline-part">
-<select name="beh_tempo_m">
-""");
-for (var i = 0; i <= 59; i++)
 {
 var sel = i == 6 ? " selected" : "";
 body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
@@ -2781,15 +2769,68 @@ body.Append("""
 </div>
 <div class="field">
 <label for="serie">Počet sérií</label>
-<input id="serie" type="number" name="serie" min="0" />
+<select id="serie" name="serie">
+""");
+for (var i = 0; i <= 200; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
 </div>
 <div class="field">
 <label for="opak">Počet opakování</label>
-<input id="opak" type="number" name="opak" min="0" />
+<select id="opak" name="opak">
+""");
+for (var i = 0; i <= 500; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
 </div>
 <div class="field">
-<label for="doba">Doba cvičení (min)</label>
-<input id="doba" type="number" name="doba" min="0" />
+<label for="cviceni-doba">Doba cvičení (HH:MM:SS)</label>
+<div class="inline-selects">
+<div class="inline-part">
+<select id="cviceni-doba" name="cviceni_doba_h">
+""");
+for (var i = 0; i <= 99; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">h</span>
+</div>
+<div class="inline-part">
+<select name="cviceni_doba_m">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+<div class="inline-part">
+<select name="cviceni_doba_s">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">s</span>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -2799,15 +2840,85 @@ body.Append("""
 <div class="grid">
 <div class="field">
 <label for="plav-bazen">Velikost bazénu (m)</label>
-<input id="plav-bazen" type="number" min="0" name="plav_bazen" />
+<select id="plav-bazen" name="plav_bazen">
+""");
+for (var i = 0; i <= 100; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
 </div>
 <div class="field">
 <label for="plav-vzdalenost">Vzdálenost (m)</label>
-<input id="plav-vzdalenost" type="number" min="0" name="plav_vzdalenost" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="plav-vzdalenost" name="plav_vzd_k">
+""");
+for (var i = 0; i <= 100; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">tis.</span>
+</div>
+<div class="inline-part">
+<select name="plav_vzd_r">
+""");
+for (var i = 0; i <= 999; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:000}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+</div>
 </div>
 <div class="field">
-<label for="plav-doba">Doba plavání (min)</label>
-<input id="plav-doba" type="number" min="0" name="plav_doba" />
+<label for="plav-doba">Doba plavání (HH:MM:SS)</label>
+<div class="inline-selects">
+<div class="inline-part">
+<select id="plav-doba" name="plav_doba_h">
+""");
+for (var i = 0; i <= 99; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">h</span>
+</div>
+<div class="inline-part">
+<select name="plav_doba_m">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+<div class="inline-part">
+<select name="plav_doba_s">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">s</span>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -2817,19 +2928,114 @@ body.Append("""
 <div class="grid">
 <div class="field">
 <label for="kolo-vzdalenost">Vzdálenost (km)</label>
-<input id="kolo-vzdalenost" type="number" step="0.01" min="0" name="kolo_vzdalenost" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="kolo-vzdalenost" name="kolo_vzd_int">
+""");
+for (var i = 0; i <= 500; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+</div>
+<span class="inline-sep">.</span>
+<div class="inline-part">
+<select name="kolo_vzd_dec">
+""");
+for (var i = 0; i <= 9; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+</div>
+<span class="inline-suffix">km</span>
+</div>
 </div>
 <div class="field">
-<label for="kolo-doba">Doba (min)</label>
-<input id="kolo-doba" type="number" min="0" name="kolo_doba" />
+<label for="kolo-doba">Doba (HH:MM:SS)</label>
+<div class="inline-selects">
+<div class="inline-part">
+<select id="kolo-doba" name="kolo_doba_h">
+""");
+for (var i = 0; i <= 99; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">h</span>
+</div>
+<div class="inline-part">
+<select name="kolo_doba_m">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+<div class="inline-part">
+<select name="kolo_doba_s">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">s</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="kolo-prevyseni">Převýšení (m)</label>
-<input id="kolo-prevyseni" type="number" min="0" name="kolo_prevyseni" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="kolo-prevyseni" name="kolo_prev_k">
+""");
+for (var i = 0; i <= 100; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">tis.</span>
+</div>
+<div class="inline-part">
+<select name="kolo_prev_r">
+""");
+for (var i = 0; i <= 999; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:000}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="kolo-tep">Tep (průměr)</label>
-<input id="kolo-tep" type="number" min="0" name="kolo_tep" />
+<select id="kolo-tep" name="kolo_tep">
+""");
+for (var i = 0; i <= 210; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
 </div>
 </div>
 </div>
@@ -2839,19 +3045,114 @@ body.Append("""
 <div class="grid">
 <div class="field">
 <label for="tur-vzdalenost">Vzdálenost (km)</label>
-<input id="tur-vzdalenost" type="number" step="0.01" min="0" name="tur_vzdalenost" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="tur-vzdalenost" name="tur_vzd_int">
+""");
+for (var i = 0; i <= 500; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+</div>
+<span class="inline-sep">.</span>
+<div class="inline-part">
+<select name="tur_vzd_dec">
+""");
+for (var i = 0; i <= 9; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+</div>
+<span class="inline-suffix">km</span>
+</div>
 </div>
 <div class="field">
-<label for="tur-doba">Doba (min)</label>
-<input id="tur-doba" type="number" min="0" name="tur_doba" />
+<label for="tur-doba">Doba (HH:MM:SS)</label>
+<div class="inline-selects">
+<div class="inline-part">
+<select id="tur-doba" name="tur_doba_h">
+""");
+for (var i = 0; i <= 99; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">h</span>
+</div>
+<div class="inline-part">
+<select name="tur_doba_m">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+<div class="inline-part">
+<select name="tur_doba_s">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">s</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="tur-prevyseni">Převýšení (m)</label>
-<input id="tur-prevyseni" type="number" min="0" name="tur_prevyseni" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="tur-prevyseni" name="tur_prev_k">
+""");
+for (var i = 0; i <= 100; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">tis.</span>
+</div>
+<div class="inline-part">
+<select name="tur_prev_r">
+""");
+for (var i = 0; i <= 999; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:000}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="tur-tep">Tep (průměr)</label>
-<input id="tur-tep" type="number" min="0" name="tur_tep" />
+<select id="tur-tep" name="tur_tep">
+""");
+for (var i = 0; i <= 210; i++)
+{
+var sel = i == 0 ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
 </div>
 </div>
 </div>
@@ -3014,31 +3315,31 @@ zaznam.Tep = ClampInt(ParseInt(form["beh_tep"].ToString()), 0, 210);
 }
 else if (zaznam.Typ == "kolo")
 {
-zaznam.VzdalenostKm = ParseDouble(form["kolo_vzdalenost"].ToString());
-zaznam.DobaMinuty = ParseInt(form["kolo_doba"].ToString());
-zaznam.PrevyseniM = ParseInt(form["kolo_prevyseni"].ToString());
-zaznam.Tep = ParseInt(form["kolo_tep"].ToString());
+zaznam.VzdalenostKm = BuildDistanceFromForm(form, "kolo");
+zaznam.DobaMinuty = BuildDurationMinutesFromForm(form, "kolo");
+zaznam.PrevyseniM = BuildPrevyseniFromForm(form, "kolo");
+zaznam.Tep = ClampInt(ParseInt(form["kolo_tep"].ToString()), 0, 210);
 }
 else if (zaznam.Typ == "turistika")
 {
-zaznam.VzdalenostKm = ParseDouble(form["tur_vzdalenost"].ToString());
-zaznam.DobaMinuty = ParseInt(form["tur_doba"].ToString());
-zaznam.PrevyseniM = ParseInt(form["tur_prevyseni"].ToString());
-zaznam.Tep = ParseInt(form["tur_tep"].ToString());
+zaznam.VzdalenostKm = BuildDistanceFromForm(form, "tur");
+zaznam.DobaMinuty = BuildDurationMinutesFromForm(form, "tur");
+zaznam.PrevyseniM = BuildPrevyseniFromForm(form, "tur");
+zaznam.Tep = ClampInt(ParseInt(form["tur_tep"].ToString()), 0, 210);
 }
 else if (zaznam.Typ == "plavani")
 {
-zaznam.VelikostBazenuM = ParseInt(form["plav_bazen"].ToString());
-zaznam.VzdalenostM = ParseInt(form["plav_vzdalenost"].ToString());
-zaznam.DobaPlavaniMin = ParseInt(form["plav_doba"].ToString());
+zaznam.VelikostBazenuM = ClampInt(ParseInt(form["plav_bazen"].ToString()), 0, 100);
+zaznam.VzdalenostM = BuildMetersFromForm(form, "plav");
+zaznam.DobaPlavaniMin = BuildDurationMinutesFromForm(form, "plav");
 }
 else
 {
 zaznam.Typ = "cviceni";
 zaznam.Cviceni = form["cviceni"].ToString();
-zaznam.Serie = ParseInt(form["serie"].ToString());
-zaznam.Opakovani = ParseInt(form["opak"].ToString());
-zaznam.DobaMinuty = ParseInt(form["doba"].ToString());
+zaznam.Serie = ClampInt(ParseInt(form["serie"].ToString()), 0, 200);
+zaznam.Opakovani = ClampInt(ParseInt(form["opak"].ToString()), 0, 500);
+zaznam.DobaMinuty = BuildDurationMinutesFromForm(form, "cviceni");
 }
 
 var newId = DbInsert(zaznam, user.Id);
@@ -3078,11 +3379,26 @@ var customFields = DbGetCustomFieldsForTypes(customTypes.Select(t => t.Id).ToLis
 var customFieldsByType = customFields.GroupBy(f => f.TypeId).ToDictionary(g => g.Key, g => g.ToList());
 var customValues = DbGetCustomValuesByRecord(z.Id);
 SplitDistance(z.VzdalenostKm, out var behVzdInt, out var behVzdDec);
-var (behTempoH, behTempoM, behTempoS) = ParseTempoParts(z.Tempo);
+var (behTempoH, behTempoMRaw, behTempoS) = ParseTempoParts(z.Tempo);
+var behTempoM = ClampInt((behTempoH * 60) + behTempoMRaw, 0, 60);
 var behPrevVal = ClampInt(z.PrevyseniM, 0, 100000);
 var behPrevK = behPrevVal / 1000;
 var behPrevR = behPrevVal % 1000;
 var behTep = ClampInt(z.Tep, 0, 210);
+SplitDistance(z.VzdalenostKm, out var koloVzdInt, out var koloVzdDec);
+SplitDistance(z.VzdalenostKm, out var turVzdInt, out var turVzdDec);
+SplitDurationPartsFromMinutes(z.DobaMinuty, out var koloDobaH, out var koloDobaM, out var koloDobaS);
+SplitDurationPartsFromMinutes(z.DobaMinuty, out var turDobaH, out var turDobaM, out var turDobaS);
+SplitDurationPartsFromMinutes(z.DobaPlavaniMin, out var plavDobaH, out var plavDobaM, out var plavDobaS);
+SplitDurationPartsFromMinutes(z.DobaMinuty, out var cvicDobaH, out var cvicDobaM, out var cvicDobaS);
+SplitThousands(z.PrevyseniM, 100000, out var koloPrevK, out var koloPrevR);
+SplitThousands(z.PrevyseniM, 100000, out var turPrevK, out var turPrevR);
+SplitThousands(z.VzdalenostM, 100000, out var plavVzdK, out var plavVzdR);
+var koloTep = ClampInt(z.Tep, 0, 210);
+var turTep = ClampInt(z.Tep, 0, 210);
+var plavBazen = ClampInt(z.VelikostBazenuM, 0, 100);
+var cvicSerie = ClampInt(z.Serie, 0, 200);
+var cvicOpak = ClampInt(z.Opakovani, 0, 500);
 
 var body = new StringBuilder();
 body.Append($"<h2>Editace záznamu</h2><p style=\"color:#64748b;margin-top:-0.25rem\">ID: {z.Id}</p>");
@@ -3144,24 +3460,12 @@ body.Append("""
 </div>
 </div>
 <div class="field">
-<label for="beh-tempo">Tempo (HH:MM:SS)</label>
+<label for="beh-tempo">Tempo (MM:SS)</label>
 <div class="inline-selects">
 <div class="inline-part">
-<select id="beh-tempo" name="beh_tempo_h">
+<select id="beh-tempo" name="beh_tempo_m">
 """);
 for (var i = 0; i <= 60; i++)
-{
-var sel = i == behTempoH ? " selected" : "";
-body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
-}
-body.Append("""
-</select>
-<span class="inline-suffix">h</span>
-</div>
-<div class="inline-part">
-<select name="beh_tempo_m">
-""");
-for (var i = 0; i <= 59; i++)
 {
 var sel = i == behTempoM ? " selected" : "";
 body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
@@ -3249,15 +3553,68 @@ body.Append($"""
 </div>
 <div class="field">
 <label for="serie">Počet sérií</label>
-<input id="serie" type="number" name="serie" min="0" value="{H(ValI(z.Serie))}" />
+<select id="serie" name="serie">
+""");
+for (var i = 0; i <= 200; i++)
+{
+var sel = i == cvicSerie ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
 </div>
 <div class="field">
 <label for="opak">Počet opakování</label>
-<input id="opak" type="number" name="opak" min="0" value="{H(ValI(z.Opakovani))}" />
+<select id="opak" name="opak">
+""");
+for (var i = 0; i <= 500; i++)
+{
+var sel = i == cvicOpak ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
 </div>
 <div class="field">
-<label for="doba">Doba cvičení (min)</label>
-<input id="doba" type="number" name="doba" min="0" value="{H(ValI(z.DobaMinuty))}" />
+<label for="cviceni-doba">Doba cvičení (HH:MM:SS)</label>
+<div class="inline-selects">
+<div class="inline-part">
+<select id="cviceni-doba" name="cviceni_doba_h">
+""");
+for (var i = 0; i <= 99; i++)
+{
+var sel = i == cvicDobaH ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">h</span>
+</div>
+<div class="inline-part">
+<select name="cviceni_doba_m">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == cvicDobaM ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+<div class="inline-part">
+<select name="cviceni_doba_s">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == cvicDobaS ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">s</span>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -3266,19 +3623,114 @@ body.Append($"""
 <div class="grid">
 <div class="field">
 <label for="kolo-vzdalenost">Vzdálenost (km)</label>
-<input id="kolo-vzdalenost" type="number" step="0.01" min="0" name="kolo_vzdalenost" value="{H(ValD(z.VzdalenostKm))}" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="kolo-vzdalenost" name="kolo_vzd_int">
+""");
+for (var i = 0; i <= 500; i++)
+{
+var sel = i == koloVzdInt ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+</div>
+<span class="inline-sep">.</span>
+<div class="inline-part">
+<select name="kolo_vzd_dec">
+""");
+for (var i = 0; i <= 9; i++)
+{
+var sel = i == koloVzdDec ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+</div>
+<span class="inline-suffix">km</span>
+</div>
 </div>
 <div class="field">
 <label for="kolo-doba">Doba (min)</label>
-<input id="kolo-doba" type="number" min="0" name="kolo_doba" value="{H(ValI(z.DobaMinuty))}" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="kolo-doba" name="kolo_doba_h">
+""");
+for (var i = 0; i <= 99; i++)
+{
+var sel = i == koloDobaH ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">h</span>
+</div>
+<div class="inline-part">
+<select name="kolo_doba_m">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == koloDobaM ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+<div class="inline-part">
+<select name="kolo_doba_s">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == koloDobaS ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">s</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="kolo-prevyseni">Převýšení (m)</label>
-<input id="kolo-prevyseni" type="number" min="0" name="kolo_prevyseni" value="{H(ValI(z.PrevyseniM))}" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="kolo-prevyseni" name="kolo_prev_k">
+""");
+for (var i = 0; i <= 100; i++)
+{
+var sel = i == koloPrevK ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">tis.</span>
+</div>
+<div class="inline-part">
+<select name="kolo_prev_r">
+""");
+for (var i = 0; i <= 999; i++)
+{
+var sel = i == koloPrevR ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:000}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="kolo-tep">Tep (průměr)</label>
-<input id="kolo-tep" type="number" min="0" name="kolo_tep" value="{H(ValI(z.Tep))}" />
+<select id="kolo-tep" name="kolo_tep">
+""");
+for (var i = 0; i <= 210; i++)
+{
+var sel = i == koloTep ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
 </div>
 </div>
 </div>
@@ -3287,19 +3739,114 @@ body.Append($"""
 <div class="grid">
 <div class="field">
 <label for="tur-vzdalenost">Vzdálenost (km)</label>
-<input id="tur-vzdalenost" type="number" step="0.01" min="0" name="tur_vzdalenost" value="{H(ValD(z.VzdalenostKm))}" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="tur-vzdalenost" name="tur_vzd_int">
+""");
+for (var i = 0; i <= 500; i++)
+{
+var sel = i == turVzdInt ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+</div>
+<span class="inline-sep">.</span>
+<div class="inline-part">
+<select name="tur_vzd_dec">
+""");
+for (var i = 0; i <= 9; i++)
+{
+var sel = i == turVzdDec ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+</div>
+<span class="inline-suffix">km</span>
+</div>
 </div>
 <div class="field">
 <label for="tur-doba">Doba (min)</label>
-<input id="tur-doba" type="number" min="0" name="tur_doba" value="{H(ValI(z.DobaMinuty))}" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="tur-doba" name="tur_doba_h">
+""");
+for (var i = 0; i <= 99; i++)
+{
+var sel = i == turDobaH ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">h</span>
+</div>
+<div class="inline-part">
+<select name="tur_doba_m">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == turDobaM ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+<div class="inline-part">
+<select name="tur_doba_s">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == turDobaS ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">s</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="tur-prevyseni">Převýšení (m)</label>
-<input id="tur-prevyseni" type="number" min="0" name="tur_prevyseni" value="{H(ValI(z.PrevyseniM))}" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="tur-prevyseni" name="tur_prev_k">
+""");
+for (var i = 0; i <= 100; i++)
+{
+var sel = i == turPrevK ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">tis.</span>
+</div>
+<div class="inline-part">
+<select name="tur_prev_r">
+""");
+for (var i = 0; i <= 999; i++)
+{
+var sel = i == turPrevR ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:000}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="tur-tep">Tep (průměr)</label>
-<input id="tur-tep" type="number" min="0" name="tur_tep" value="{H(ValI(z.Tep))}" />
+<select id="tur-tep" name="tur_tep">
+""");
+for (var i = 0; i <= 210; i++)
+{
+var sel = i == turTep ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
 </div>
 </div>
 </div>
@@ -3308,15 +3855,85 @@ body.Append($"""
 <div class="grid">
 <div class="field">
 <label for="plav-bazen">Velikost bazénu (m)</label>
-<input id="plav-bazen" type="number" min="0" name="plav_bazen" value="{H(ValI(z.VelikostBazenuM))}" />
+<select id="plav-bazen" name="plav_bazen">
+""");
+for (var i = 0; i <= 100; i++)
+{
+var sel = i == plavBazen ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
 </div>
 <div class="field">
 <label for="plav-vzdalenost">Vzdálenost (m)</label>
-<input id="plav-vzdalenost" type="number" min="0" name="plav_vzdalenost" value="{H(ValI(z.VzdalenostM))}" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="plav-vzdalenost" name="plav_vzd_k">
+""");
+for (var i = 0; i <= 100; i++)
+{
+var sel = i == plavVzdK ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">tis.</span>
+</div>
+<div class="inline-part">
+<select name="plav_vzd_r">
+""");
+for (var i = 0; i <= 999; i++)
+{
+var sel = i == plavVzdR ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:000}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+</div>
 </div>
 <div class="field">
 <label for="plav-doba">Doba plavání (min)</label>
-<input id="plav-doba" type="number" min="0" name="plav_doba" value="{H(ValI(z.DobaPlavaniMin))}" />
+<div class="inline-selects">
+<div class="inline-part">
+<select id="plav-doba" name="plav_doba_h">
+""");
+for (var i = 0; i <= 99; i++)
+{
+var sel = i == plavDobaH ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">h</span>
+</div>
+<div class="inline-part">
+<select name="plav_doba_m">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == plavDobaM ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">m</span>
+</div>
+<div class="inline-part">
+<select name="plav_doba_s">
+""");
+for (var i = 0; i <= 59; i++)
+{
+var sel = i == plavDobaS ? " selected" : "";
+body.Append($"<option value=\"{i}\"{sel}>{i:00}</option>");
+}
+body.Append("""
+</select>
+<span class="inline-suffix">s</span>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -3468,31 +4085,31 @@ zaznam.Tep = ClampInt(ParseInt(form["beh_tep"].ToString()), 0, 210);
 }
 else if (zaznam.Typ == "kolo")
 {
-zaznam.VzdalenostKm = ParseDouble(form["kolo_vzdalenost"].ToString());
-zaznam.DobaMinuty = ParseInt(form["kolo_doba"].ToString());
-zaznam.PrevyseniM = ParseInt(form["kolo_prevyseni"].ToString());
-zaznam.Tep = ParseInt(form["kolo_tep"].ToString());
+zaznam.VzdalenostKm = BuildDistanceFromForm(form, "kolo");
+zaznam.DobaMinuty = BuildDurationMinutesFromForm(form, "kolo");
+zaznam.PrevyseniM = BuildPrevyseniFromForm(form, "kolo");
+zaznam.Tep = ClampInt(ParseInt(form["kolo_tep"].ToString()), 0, 210);
 }
 else if (zaznam.Typ == "turistika")
 {
-zaznam.VzdalenostKm = ParseDouble(form["tur_vzdalenost"].ToString());
-zaznam.DobaMinuty = ParseInt(form["tur_doba"].ToString());
-zaznam.PrevyseniM = ParseInt(form["tur_prevyseni"].ToString());
-zaznam.Tep = ParseInt(form["tur_tep"].ToString());
+zaznam.VzdalenostKm = BuildDistanceFromForm(form, "tur");
+zaznam.DobaMinuty = BuildDurationMinutesFromForm(form, "tur");
+zaznam.PrevyseniM = BuildPrevyseniFromForm(form, "tur");
+zaznam.Tep = ClampInt(ParseInt(form["tur_tep"].ToString()), 0, 210);
 }
 else if (zaznam.Typ == "plavani")
 {
-zaznam.VelikostBazenuM = ParseInt(form["plav_bazen"].ToString());
-zaznam.VzdalenostM = ParseInt(form["plav_vzdalenost"].ToString());
-zaznam.DobaPlavaniMin = ParseInt(form["plav_doba"].ToString());
+zaznam.VelikostBazenuM = ClampInt(ParseInt(form["plav_bazen"].ToString()), 0, 100);
+zaznam.VzdalenostM = BuildMetersFromForm(form, "plav");
+zaznam.DobaPlavaniMin = BuildDurationMinutesFromForm(form, "plav");
 }
 else
 {
 zaznam.Typ = "cviceni";
 zaznam.Cviceni = form["cviceni"].ToString();
-zaznam.Serie = ParseInt(form["serie"].ToString());
-zaznam.Opakovani = ParseInt(form["opak"].ToString());
-zaznam.DobaMinuty = ParseInt(form["doba"].ToString());
+zaznam.Serie = ClampInt(ParseInt(form["serie"].ToString()), 0, 200);
+zaznam.Opakovani = ClampInt(ParseInt(form["opak"].ToString()), 0, 500);
+zaznam.DobaMinuty = BuildDurationMinutesFromForm(form, "cviceni");
 }
 
 DbUpdate(zaznam, user.Id, user.IsAdmin);
@@ -5078,15 +5695,13 @@ return (0, 0, 0);
 
 static string BuildTempoFromForm(IFormCollection form, string prefix)
 {
-var hKey = $"{prefix}_tempo_h";
 var mKey = $"{prefix}_tempo_m";
 var sKey = $"{prefix}_tempo_s";
-if (form.ContainsKey(hKey) || form.ContainsKey(mKey) || form.ContainsKey(sKey))
+if (form.ContainsKey(mKey) || form.ContainsKey(sKey))
 {
-var h = ClampInt(ParseInt(form[hKey].ToString()), 0, 60);
 var m = ClampInt(ParseInt(form[mKey].ToString()), 0, 59);
 var s = ClampInt(ParseInt(form[sKey].ToString()), 0, 59);
-return $"{h}:{m:00}:{s:00}";
+return $"{m}:{s:00}";
 }
 return form[$"{prefix}_tempo"].ToString();
 }
@@ -5116,6 +5731,58 @@ var val = (k * 1000) + r;
 return ClampInt(val, 0, 100000);
 }
 return ParseInt(form[$"{prefix}_prevyseni"].ToString());
+}
+
+static int BuildDurationMinutesFromForm(IFormCollection form, string prefix)
+{
+var hKey = $"{prefix}_doba_h";
+var mKey = $"{prefix}_doba_m";
+var sKey = $"{prefix}_doba_s";
+if (form.ContainsKey(hKey) || form.ContainsKey(mKey) || form.ContainsKey(sKey))
+{
+var h = ClampInt(ParseInt(form[hKey].ToString()), 0, 99);
+var m = ClampInt(ParseInt(form[mKey].ToString()), 0, 59);
+var s = ClampInt(ParseInt(form[sKey].ToString()), 0, 59);
+var totalSeconds = (h * 3600) + (m * 60) + s;
+return (int)Math.Round(totalSeconds / 60.0, MidpointRounding.AwayFromZero);
+}
+return ParseInt(form[$"{prefix}_doba"].ToString());
+}
+
+static void SplitDurationPartsFromMinutes(int minutes, out int h, out int m, out int s)
+{
+if (minutes <= 0)
+{
+h = 0;
+m = 0;
+s = 0;
+return;
+}
+var totalSeconds = minutes * 60;
+h = ClampInt(totalSeconds / 3600, 0, 99);
+m = ClampInt((totalSeconds / 60) % 60, 0, 59);
+s = ClampInt(totalSeconds % 60, 0, 59);
+}
+
+static void SplitThousands(int value, int max, out int k, out int r)
+{
+var v = ClampInt(value, 0, max);
+k = v / 1000;
+r = v % 1000;
+}
+
+static int BuildMetersFromForm(IFormCollection form, string prefix)
+{
+var kKey = $"{prefix}_vzd_k";
+var rKey = $"{prefix}_vzd_r";
+if (form.ContainsKey(kKey) || form.ContainsKey(rKey))
+{
+var k = ClampInt(ParseInt(form[kKey].ToString()), 0, 100);
+var r = ClampInt(ParseInt(form[rKey].ToString()), 0, 999);
+var val = (k * 1000) + r;
+return ClampInt(val, 0, 100000);
+}
+return ParseInt(form[$"{prefix}_vzdalenost"].ToString());
 }
 
 static bool TryParsePaceMinPerKm(string? tempoText, out double paceMinPerKm)
