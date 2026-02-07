@@ -4305,7 +4305,7 @@ table { min-width: 520px; }
 .tag-list { gap: 0.5rem; }
 .tag-list label { font-size: 0.9rem; }
 .range-form { gap: 0.5rem; }
-.range-form .field { min-width: 0; flex: 1 1 140px; }
+.range-form .field { min-width: 0; flex: 1 1 100%; }
 .range-form button, .range-form .btn-secondary { flex: 1 1 120px; justify-content: center; }
 .tabs { flex-wrap: wrap; }
 .tab-btn { flex: 1 1 120px; justify-content: center; }
@@ -4316,7 +4316,7 @@ table { min-width: 520px; }
 .field { min-width: 0; }
 .field label { display:block; font-size: 0.9rem; color: var(--muted); margin-bottom: 0.25rem; }
 .field input, .field select { width: 100%; padding: 0.55rem 0.65rem; border: 1px solid var(--border); border-radius: 10px; font-size: 1rem; background: white; }
-.field input[type="date"] { min-width: 0; }
+.field input[type="date"] { min-width: 0; width: 100%; max-width: 100%; display: block; }
 .actions { margin-top: 1rem; }
 .tag-list { display:flex; gap:0.75rem; flex-wrap:wrap; }
 .tag-list label { display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.95rem; color: var(--text); white-space: nowrap; }
@@ -4352,6 +4352,7 @@ th { background: #f1f5f9; font-size: 0.9rem; color: #0f172a; }
 .range-btn.active { background: #e2e8f0; color: #0f172a; border-color: #cbd5e1; }
 .range-form { display:flex; gap: 0.75rem; flex-wrap:wrap; align-items:flex-end; margin: 0 0 1rem; }
 .range-form .field { min-width: 160px; }
+.range-form .btn-secondary { display:flex; justify-content:center; }
 .range-tabs a { display:inline-flex; align-items:center; gap:0.35rem; padding: 0.45rem 0.75rem; border-radius: 999px; background: #e2e8f0; color: #0f172a; text-decoration:none; font-weight: 700; border: 1px solid #cbd5e1; }
 .range-tabs a.active { background: var(--primary); color: white; border-color: var(--primary); }
 
