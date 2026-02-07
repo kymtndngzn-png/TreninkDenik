@@ -3162,11 +3162,11 @@ body.Append($"""
 <div class="field" style="margin-top:1rem">
 <label for="poznamka">Poznámka</label>
 <textarea id="poznamka" name="poznamka" rows="3" style="width:100%; padding:0.55rem 0.65rem; border: 1px solid var(--border); border-radius: 10px; font-size: 1rem; background: white; resize: vertical">{H(z.Poznamka)}</textarea>
-<div style="margin-top:0.6rem; display:flex; gap:0.75rem; flex-wrap:wrap">
-<label style="display:flex; gap:0.4rem; align-items:center"><input type="checkbox" name="tag" value="intervaly" {(TagSet(z.Tagy).Contains("intervaly") ? "checked" : "")} /> intervaly</label>
-<label style="display:flex; gap:0.4rem; align-items:center"><input type="checkbox" name="tag" value="závod" {(TagSet(z.Tagy).Contains("závod") ? "checked" : "")} /> závod</label>
-<label style="display:flex; gap:0.4rem; align-items:center"><input type="checkbox" name="tag" value="easy" {(TagSet(z.Tagy).Contains("easy") ? "checked" : "")} /> easy</label>
-<label style="display:flex; gap:0.4rem; align-items:center"><input type="checkbox" name="tag" value="bolest" {(TagSet(z.Tagy).Contains("bolest") ? "checked" : "")} /> bolest</label>
+<div class="tag-list" style="margin-top:0.6rem">
+<label><input type="checkbox" name="tag" value="intervaly" {(TagSet(z.Tagy).Contains("intervaly") ? "checked" : "")} /> intervaly</label>
+<label><input type="checkbox" name="tag" value="závod" {(TagSet(z.Tagy).Contains("závod") ? "checked" : "")} /> závod</label>
+<label><input type="checkbox" name="tag" value="easy" {(TagSet(z.Tagy).Contains("easy") ? "checked" : "")} /> easy</label>
+<label><input type="checkbox" name="tag" value="bolest" {(TagSet(z.Tagy).Contains("bolest") ? "checked" : "")} /> bolest</label>
 </div>
 </div>
 <div class="field" style="margin-top:0.75rem">
@@ -3424,17 +3424,17 @@ sb.Append($"<input id=\"q\" name=\"q\" type=\"text\" placeholder=\"např. interv
 
 // Tagy (filtr) – stejný styl jako u nového záznamu
 sb.Append("<div class=\"field\" style=\"min-width:320px\">\n<label>Tagy</label>\n");
-sb.Append("<div style=\"margin-top:0.6rem; display:flex; gap:0.75rem; flex-wrap:wrap\">\n");
+sb.Append("<div class=\"tag-list\" style=\"margin-top:0.6rem\">\n");
 
 var chkIntervaly = selTags.Any(x => string.Equals(x, "intervaly", StringComparison.OrdinalIgnoreCase)) ? "checked" : "";
 var chkZavod = selTags.Any(x => string.Equals(x, "závod", StringComparison.OrdinalIgnoreCase)) ? "checked" : "";
 var chkEasy = selTags.Any(x => string.Equals(x, "easy", StringComparison.OrdinalIgnoreCase)) ? "checked" : "";
 var chkBolest = selTags.Any(x => string.Equals(x, "bolest", StringComparison.OrdinalIgnoreCase)) ? "checked" : "";
 
-sb.Append($"<label style=\"display:flex; gap:0.4rem; align-items:center\"><input type=\"checkbox\" name=\"tag\" value=\"intervaly\" {chkIntervaly} /> intervaly</label>");
-sb.Append($"<label style=\"display:flex; gap:0.4rem; align-items:center\"><input type=\"checkbox\" name=\"tag\" value=\"závod\" {chkZavod} /> závod</label>");
-sb.Append($"<label style=\"display:flex; gap:0.4rem; align-items:center\"><input type=\"checkbox\" name=\"tag\" value=\"easy\" {chkEasy} /> easy</label>");
-sb.Append($"<label style=\"display:flex; gap:0.4rem; align-items:center\"><input type=\"checkbox\" name=\"tag\" value=\"bolest\" {chkBolest} /> bolest</label>");
+sb.Append($"<label><input type=\"checkbox\" name=\"tag\" value=\"intervaly\" {chkIntervaly} /> intervaly</label>");
+sb.Append($"<label><input type=\"checkbox\" name=\"tag\" value=\"závod\" {chkZavod} /> závod</label>");
+sb.Append($"<label><input type=\"checkbox\" name=\"tag\" value=\"easy\" {chkEasy} /> easy</label>");
+sb.Append($"<label><input type=\"checkbox\" name=\"tag\" value=\"bolest\" {chkBolest} /> bolest</label>");
 
 sb.Append("</div>\n</div>\n");
 
@@ -4304,6 +4304,11 @@ nav a { font-size: 0.95rem; }
 table { min-width: 520px; }
 .tag-list { gap: 0.5rem; }
 .tag-list label { font-size: 0.9rem; }
+.range-form { gap: 0.5rem; }
+.range-form .field { min-width: 0; flex: 1 1 140px; }
+.range-form button, .range-form .btn-secondary { flex: 1 1 120px; justify-content: center; }
+.tabs { flex-wrap: wrap; }
+.tab-btn { flex: 1 1 120px; justify-content: center; }
 }
 .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 2px 10px rgba(15,23,42,0.06); padding: 1rem; }
 .grid { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 1rem; align-items: start; }
@@ -4311,6 +4316,7 @@ table { min-width: 520px; }
 .field { min-width: 0; }
 .field label { display:block; font-size: 0.9rem; color: var(--muted); margin-bottom: 0.25rem; }
 .field input, .field select { width: 100%; padding: 0.55rem 0.65rem; border: 1px solid var(--border); border-radius: 10px; font-size: 1rem; background: white; }
+.field input[type="date"] { min-width: 0; }
 .actions { margin-top: 1rem; }
 .tag-list { display:flex; gap:0.75rem; flex-wrap:wrap; }
 .tag-list label { display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.95rem; color: var(--text); white-space: nowrap; }
